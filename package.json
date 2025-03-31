@@ -1,0 +1,29 @@
+{
+  "name": "habit-tracker-api",
+  "version": "1.0.0",
+  "description": "Este repositorio contiene el backend del proyecto **Habit Tracker**, desarrollado en **Node.js** con **TypeScript** bajo una **arquitectura hexagonal con vertical slicing**.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManuelArango1229/habit-tracker-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManuelArango1229/habit-tracker-api/issues"
+  },
+  "homepage": "https://github.com/ManuelArango1229/habit-tracker-api#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
