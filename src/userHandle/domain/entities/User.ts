@@ -1,14 +1,20 @@
 import { Email, Password } from "../value_objects";
 
 class User {
+  private _id?: string;
   private _name: string;
   private _email: Email;
   private _password: Password;
 
-  constructor(nombre: string, email: string, password: string) {
+  constructor(id: string, nombre: string, email: string, password: string) {
+    this._id = id;
     this._name = nombre;
     this._email = new Email(email);
     this._password = new Password(password);
+  }
+
+  get id(): string | undefined {
+    return this._id;
   }
 
   get name(): string {
