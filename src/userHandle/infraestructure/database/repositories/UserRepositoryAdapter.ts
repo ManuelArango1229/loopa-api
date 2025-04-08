@@ -10,41 +10,41 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
    * @returns The saved user.
    */
   async saveUser(user: User): Promise<User> {
-    await prisma.user.create({
+    await prisma.usuario.create({
       data: {
-        name: user.name,
+        nombre: user.name,
         email: user.email,
-        password: user.password,
+        contrasena: user.password,
       },
     });
     return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const userRecord = await prisma.user.findUnique({
+    const userRecord = await prisma.usuario.findUnique({
       where: { email },
     });
 
     if (!userRecord) return null;
 
     return new User(
-      userRecord.name,
+      userRecord.nombre,
       userRecord.email,
-      userRecord.password
+      userRecord.contrasena
     );
   }
 
   async findById(id: string): Promise<User | null> {
-    const userRecord = await prisma.user.findUnique({
+    const userRecord = await prisma.usuario.findUnique({
       where: { id },
     });
 
     if (!userRecord) return null;
 
     return new User(
-      userRecord.name,
+      userRecord.nombre,
       userRecord.email,
-      userRecord.password
+      userRecord.contrasena
     );
   }
 
