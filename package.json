@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ManuelArango1229/habit-tracker-api#readme",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
     "prisma": "^6.5.0",
@@ -33,6 +34,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "bcrypt": "^5.1.1",
     "habit-tracker-api": "file:"
   }
 }
