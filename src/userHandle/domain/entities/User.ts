@@ -6,7 +6,7 @@ class User {
   private _email: Email;
   private _password: Password;
 
-  constructor(id: string, nombre: string, email: string, password: string) {
+  constructor(nombre: string, email: string, password: string, id?: string) {
     this._id = id;
     this._name = nombre;
     this._email = new Email(email);
