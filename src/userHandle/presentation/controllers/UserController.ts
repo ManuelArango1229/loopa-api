@@ -1,6 +1,9 @@
-import { Request, Response } from "express";
-import { RegisterUseCase } from "../../application/use_cases/RegisterUseCase";
-import { RegisterDTO } from "../../application/dtos/RegisterDTO";
+import type { Request, Response } from "express";
+import type { RegisterUseCase } from "../../application/use_cases/RegisterUseCase";
+import type {
+  RegisterRequest,
+  RegisterResponse,
+} from "../../application/types";
 
 export class UserController {
   constructor(private registerUseCase: RegisterUseCase) {}
@@ -12,10 +15,11 @@ export class UserController {
    * @returns A response with a 201 status code and the created user if successful. Otherwise, a 400 status code and an error message.
    */
   async register(req: Request, res: Response): Promise<Response> {
-    const user: RegisterDTO = req.body;
+    const user: RegisterRequest = req.body;
 
     try {
-      const createdUser = await this.registerUseCase.execute(user);
+      const createdUser: RegisterResponse =
+        await this.registerUseCase.execute(user);
       return res.status(201).json(createdUser);
     } catch (error: any) {
       console.error("Error en registro:", error);
@@ -23,3 +27,4 @@ export class UserController {
     }
   }
 }
+
