@@ -1,11 +1,13 @@
+import dotenvFlow from "dotenv-flow";
+dotenvFlow.config();
+
 import express from "express";
 import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
-import dotenv from "dotenv";
 
+dotenvFlow.config();
 const PORT = process.env.PORT || 3000;
 
-dotenv.config();
-
+console.log("DB URL:", process.env.DATABASE_URL);
 const app = express();
 app.use(express.json());
 
