@@ -9,3 +9,4 @@ const registerUseCase = new RegisterUseCase(userRepository, encrypter);
 const userController = new UserController(registerUseCase);
 
 export { userController };
+
