@@ -1,6 +1,8 @@
 import express from "express";
-import  userRoutes  from "./userHandle/presentation/routes/AuthRoutes";
+import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
 import dotenv from "dotenv";
+
+const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
@@ -12,8 +14,9 @@ app.use("/api/users", userRoutes);
 app.get("/", (req, res) => {
   res.json({
     message: "API Habit Tracker",
-  })
-})
+  });
+});
 
-export default app;
-
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
