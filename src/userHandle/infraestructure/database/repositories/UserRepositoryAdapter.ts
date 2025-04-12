@@ -31,7 +31,12 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
 
     if (!userRecord) return null;
 
-    return new User(userRecord.nombre, userRecord.email, userRecord.contrasena);
+    return new User(
+      userRecord.nombre,
+      userRecord.email,
+      userRecord.contrasena,
+      userRecord.id,
+    );
   }
 
   async findById(id: string): Promise<User | null> {
@@ -44,4 +49,3 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
     return new User(userRecord.nombre, userRecord.email, userRecord.contrasena);
   }
 }
-

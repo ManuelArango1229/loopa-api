@@ -23,9 +23,13 @@ class LoginUserInteractor {
     if (!foundUser) {
       return new Error("User not found");
     }
-    if (await this.passwordHashed.compare(password, foundUser.password)) {
+    console.log(
+      await this.passwordHashed.compare(password, foundUser.password),
+    );
+    if (!(await this.passwordHashed.compare(password, foundUser.password))) {
       return new Error("Invalid password");
     }
+    console.log("User found", foundUser);
     if (!foundUser.id) {
       return new Error("User ID is missing");
     }
