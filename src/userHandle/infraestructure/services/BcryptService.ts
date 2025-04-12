@@ -3,7 +3,7 @@ import type PasswordHashedServicePort from "../../application/services/PasswordH
 
 export class BcryptService implements PasswordHashedServicePort {
   async compare(plain: string, hash: string): Promise<boolean> {
-    return await bcrypt.compare(plain, hash);
+    return bcrypt.compare(plain, hash);
   } /**
    * Hashes a given string using bcrypt.
    * @param value The value to be hashed.
@@ -13,4 +13,3 @@ export class BcryptService implements PasswordHashedServicePort {
     return bcrypt.hash(value, 10);
   }
 }
-
