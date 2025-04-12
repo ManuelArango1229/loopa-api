@@ -4,9 +4,13 @@ import type {
   RegisterRequest,
   RegisterResponse,
 } from "../../application/types";
+import type LoginUserInteractor from "../../application/use_cases/LoginUserInteractor";
 
 export class UserController {
-  constructor(private registerUseCase: RegisterUseCase) {}
+  constructor(
+    private registerUseCase: RegisterUseCase,
+    private loginInteractor: LoginUserInteractor,
+  ) {}
 
   /**
    * Registers a new user.
@@ -26,5 +30,17 @@ export class UserController {
       return res.status(400).json({ message: error.message });
     }
   }
-}
 
+  async login(req: Request, res: Response): Promise<Response> {
+    const { email, password } = req.body;
+    console.log("Login request controller:", req.body);
+    try {
+      const token = await this.loginInteractor.execute(email, password);
+      console.log("Token generated controller:", token);
+      return res.status(200).json({ token });
+    } catch (error: any) {
+      console.error("Error en login:", error);
+      return res.status(400).json({ message: error.message });
+    }
+  }
+}

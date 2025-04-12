@@ -19,5 +19,16 @@ model Usuario {
   nombre          String
   email           String        @unique
   contrasena      String
+  refreshTokens   RefreshToken?  
   fecha_creacion  DateTime      @default(now())
 }
+
+model RefreshToken {
+  id         String     @id @default(uuid())
+  token      String     @unique
+  usuarioId  String     @unique
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  createdAt  DateTime   @default(now())
+  expiresAt  DateTime
+}
+

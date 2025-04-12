@@ -9,13 +9,20 @@ export class TokenGeneratorServiceAdapter implements TokenGeneratorServicePort {
       throw new Error("Secret key for access token is not defined");
     }
     return Promise.resolve(
-      jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN_KEY, {
+      jwt.sign({ sub: payload }, process.env.SECRET_ACCESS_TOKEN_KEY, {
         expiresIn: "1h",
       }),
     );
   }
   generateRefreshToken(payload: string): Promise<string> {
-    throw new Error("Method not implemented.");
+    if (!process.env.SECRET_REFRESH_TOKEN_KEY) {
+      throw new Error("Secret key for refresh token is not defined");
+    }
+    return Promise.resolve(
+      jwt.sign({ sub: payload }, process.env.SECRET_REFRESH_TOKEN_KEY, {
+        expiresIn: "365d",
+      }),
+    );
   }
   verifyAccessToken(token: string): Promise<TokenPayload | Error> {
     throw new Error("Method not implemented.");
