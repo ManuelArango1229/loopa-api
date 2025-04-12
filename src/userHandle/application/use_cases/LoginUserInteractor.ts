@@ -1,4 +1,5 @@
 import type UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
+import type RefreshTokenRepositoryPort from "../repositories/RefreshTokenRepositoryPort";
 import type PasswordHasher from "../services/PasswordHashedServicePort";
 import type TokenGeneratorServicePort from "../services/TokenGeneratorServicePort";
 import type TokenResponse from "../types/TokenResponse";
@@ -8,6 +9,7 @@ class LoginUserInteractor {
     private userRepository: UserRepositoryPort,
     private tokenGeneratorService: TokenGeneratorServicePort,
     private passwordHashed: PasswordHasher,
+    private refreshTokenRepositoryPort: RefreshTokenRepositoryPort,
   ) {}
 
   async execute(
@@ -33,7 +35,10 @@ class LoginUserInteractor {
     const refreshToken = await this.tokenGeneratorService.generateRefreshToken(
       foundUser.id,
     );
-    this.tokenGeneratorService.saveRefreshToken(new Date(), refreshToken);
+    this.refreshTokenRepositoryPort.saveRefreshToken(
+      foundUser.id,
+      refreshToken,
+    );
     return {
       accessToken,
       refreshToken,
