@@ -5,11 +5,13 @@ import type {
   RegisterResponse,
 } from "../../application/types";
 import type LoginUserInteractor from "../../application/use_cases/LoginUserInteractor";
+import type ResetPasswordInteractor from "../../application/use_cases/ResetPasswordInteractor";
 
 export class UserController {
   constructor(
     private registerUseCase: RegisterUseCase,
     private loginInteractor: LoginUserInteractor,
+    private resetpasswordInteractor: ResetPasswordInteractor
   ) {}
 
   /**
@@ -43,4 +45,9 @@ export class UserController {
       return res.status(400).json({ message: error.message });
     }
   }
+
+  async forgotPassword(email: string): Promise<void> {
+    await this.resetpasswordInteractor.execute(email);
+  }
+  
 }
