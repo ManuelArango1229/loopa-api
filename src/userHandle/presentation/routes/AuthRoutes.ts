@@ -21,15 +21,19 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-
+router.post("/forgot-password", async (req, res, next) => {
   try {
-    await userController.forgotPassword(email);
-    res.status(200).json({ message: "Correo de restablecimiento enviado" });
-  } catch (error: any) {
-    console.error(error);
-    res.status(400).json({ error: error.message || "Error enviando el correo" });
+    await userController.forgotPassword(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/reset-password", async (req, res, next) => {
+  try {
+    await userController.resetPassword(req, res);
+  } catch (error) {
+    next(error);
   }
 });
 
