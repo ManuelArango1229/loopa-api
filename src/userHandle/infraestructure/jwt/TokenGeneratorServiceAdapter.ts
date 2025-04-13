@@ -25,12 +25,25 @@ export class TokenGeneratorServiceAdapter implements TokenGeneratorServicePort {
     );
   }
   verifyAccessToken(token: string): Promise<TokenPayload | Error> {
-    throw new Error("Method not implemented.");
+    if (!process.env.SECRET_ACCESS_TOKEN_KEY) {
+      throw new Error("Secret key for access token is not defined");
+    }
+    try {
+      const payload = jwt.verify(token, process.env.SECRET_ACCESS_TOKEN_KEY);
+      return Promise.resolve(payload as TokenPayload);
+    } catch (err) {
+      throw new Error("Invalid access token");
+    }
   }
   verifyRefreshToken(token: string): Promise<TokenPayload | Error> {
-    throw new Error("Method not implemented.");
-  }
-  revokeRefreshToken(token: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    if (!process.env.SECRET_REFRESH_TOKEN_KEY) {
+      throw new Error("Secret key for refresh token is not defined");
+    }
+    try {
+      const payload = jwt.verify(token, process.env.SECRET_REFRESH_TOKEN_KEY);
+      return Promise.resolve(payload as TokenPayload);
+    } catch (err) {
+      throw new Error("Invalid refresh token");
+    }
   }
 }

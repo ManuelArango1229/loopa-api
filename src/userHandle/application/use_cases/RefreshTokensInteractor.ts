@@ -1,5 +1,6 @@
 import type RefreshTokenRepositoryPort from "../repositories/RefreshTokenRepositoryPort";
 import type TokenGeneratorServicePort from "../services/TokenGeneratorServicePort";
+import { RefreshTokenWithUser } from "../types/RefreshTokenResponse";
 import type TokenResponse from "../types/TokenResponse";
 
 class RefreshTokensInteractor {
@@ -13,13 +14,22 @@ class RefreshTokensInteractor {
     if (!userId) throw new Error("Invalid refresh token");
     await this.refreshTokenRepository.deleteRefreshToken(refreshToken);
     const newRefreshToken =
-      await this.tokenGeneratorService.generateRefreshToken(userId);
-    await this.refreshTokenRepository.saveRefreshToken(userId, newRefreshToken);
-    const newAccessToken =
-      await this.tokenGeneratorService.generateAccessToken(userId);
+      await this.tokenGeneratorService.generateRefreshToken(userId.user.id);
+    await this.refreshTokenRepository.saveRefreshToken(
+      userId.user.id,
+      newRefreshToken,
+    );
+    const newAccessToken = await this.tokenGeneratorService.generateAccessToken(
+      userId.user.id,
+    );
     return {
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
+      user: {
+        id: userId.user.id,
+        name: userId.user.nombre,
+        email: userId.user.email,
+      },
     };
   }
 }
