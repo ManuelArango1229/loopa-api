@@ -1,20 +1,39 @@
-import type UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
-import type PasswordResetTokenPort from "../services/PasswordResetTokenPort";
+// src/application/interactors/ResetPasswordInteractor.ts
+import PasswordResetTokenPort from "../services/PasswordResetTokenPort";
+import UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
+import type PasswordHasherServicePort from "../services/PasswordHashedServicePort";
+import e from "express";
 
-class ResetPasswordInteractor {
+export class ResetPasswordInteractor {
   constructor(
+    private passwordResetTokenPort: PasswordResetTokenPort,
     private userRepository: UserRepositoryPort,
-    private passwordResetService: PasswordResetTokenPort
+    private encrypter: PasswordHasherServicePort
   ) {}
 
-  async execute(email: string): Promise<void> {
-    const user = await this.userRepository.findByEmail(email);
+  /**
+   * Resetea la contraseña del usuario.
+   * @param token El token de restablecimiento.
+   * @param newPassword La nueva contraseña del usuario.
+   */
+  async execute(token: string, newPassword: string): Promise<void> {
+    const isValidToken = await this.passwordResetTokenPort.verifyResetToken(token);
 
-    if (!user) {
-      throw new Error("Usuario no encontrado con ese correo.");
+    if (!isValidToken) {
+      throw new Error("Token de restablecimiento no válido o expirado.");
     }
 
-    await this.passwordResetService.sendResetPasswordEmail(email);
+    const resetRequest = await this.userRepository.findByResetToken(token);
+
+    if (!resetRequest) {
+      throw new Error("No se encontró el token de restablecimiento.");
+    }
+
+    const hashedPassword = await this.encrypter.hash(newPassword);
+
+    await this.userRepository.updatePassword(resetRequest.email, hashedPassword);
+
+    await this.passwordResetTokenPort.deleteResetToken(token);
   }
 }
 
