@@ -46,6 +46,11 @@ class LoginUserInteractor {
     return {
       accessToken,
       refreshToken,
+      user: {
+        id: foundUser?.id,
+        name: foundUser?.name,
+        email: foundUser?.email,
+      },
     };
   }
 }
