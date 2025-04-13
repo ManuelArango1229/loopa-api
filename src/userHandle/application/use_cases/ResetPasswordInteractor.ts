@@ -2,7 +2,6 @@
 import PasswordResetTokenPort from "../services/PasswordResetTokenPort";
 import UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
 import type PasswordHasherServicePort from "../services/PasswordHashedServicePort";
-import e from "express";
 
 export class ResetPasswordInteractor {
   constructor(
