@@ -6,6 +6,7 @@ import { UserRepositoryAdapter } from "./infraestructure/database/repositories/U
 import { TokenGeneratorServiceAdapter } from "./infraestructure/jwt/TokenGeneratorServiceAdapter";
 import { BcryptService } from "./infraestructure/services/BcryptService";
 import { UserController } from "./presentation/controllers/UserController";
+import RefreshTokensInteractor from "./application/use_cases/RefreshTokensInteractor";
 
 const refreshTokenRepository = new RefreshTokenRepositoryAdapter();
 const tokenGeneratorServices = new TokenGeneratorServiceAdapter();
@@ -19,10 +20,15 @@ const loginUserInteractor = new LoginUserInteractor(
   encrypter,
   refreshTokenRepository,
 );
+const refreshTokensInteractor = new RefreshTokensInteractor(
+  refreshTokenRepository,
+  tokenGeneratorServices,
+);
 const userController = new UserController(
   registerUseCase,
   loginUserInteractor,
   logoutInteractor,
+  refreshTokensInteractor,
 );
 
 export { userController };
