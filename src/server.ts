@@ -8,7 +8,6 @@ import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
 dotenvFlow.config();
 const PORT = process.env.PORT || 3000;
 
-console.log("DB URL:", process.env.DATABASE_URL);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());

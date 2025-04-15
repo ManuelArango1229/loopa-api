@@ -23,15 +23,22 @@ class LoginUserInteractor {
     if (!foundUser) {
       return new Error("User not found");
     }
-    console.log(
-      await this.passwordHashed.compare(password, foundUser.password),
-    );
+    await this.passwordHashed.compare(password, foundUser.password);
     if (!(await this.passwordHashed.compare(password, foundUser.password))) {
       return new Error("Invalid password");
     }
-    console.log("User found", foundUser);
     if (!foundUser.id) {
       return new Error("User ID is missing");
+    }
+    const existingToken =
+      await this.refreshTokenRepositoryPort.getRefreshTokenByUserId(
+        foundUser.id,
+      );
+
+    if (existingToken) {
+      await this.refreshTokenRepositoryPort.deleteRefreshTokenByUserId(
+        foundUser.id,
+      );
     }
     const accessToken = await this.tokenGeneratorService.generateAccessToken(
       foundUser.id,
