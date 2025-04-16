@@ -23,6 +23,7 @@ class LoginUserInteractor {
     if (!foundUser) {
       return new Error("User not found");
     }
+
     await this.passwordHashed.compare(password, foundUser.password);
     if (!(await this.passwordHashed.compare(password, foundUser.password))) {
       return new Error("Invalid password");
@@ -40,6 +41,7 @@ class LoginUserInteractor {
         foundUser.id,
       );
     }
+
     const accessToken = await this.tokenGeneratorService.generateAccessToken(
       foundUser.id,
     );

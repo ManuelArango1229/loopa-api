@@ -18,7 +18,6 @@ export class RefreshTokenRepositoryAdapter
       },
     });
   }
-
   async getRefreshToken(token: string): Promise<RefreshTokenWithUser | null> {
     const record = await prisma.refreshToken.findUnique({
       where: { token },
