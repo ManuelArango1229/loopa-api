@@ -56,4 +56,12 @@ router.post("/reset-password", async (req, res, next) => {
   }
 });
 
+router.put("/:email", async (req, res, next) => {
+  try {
+    await userController.updateUser(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
