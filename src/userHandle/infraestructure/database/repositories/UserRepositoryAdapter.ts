@@ -52,6 +52,7 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
    * @param id The ID of the user to be found.
    * @returns The found user or null if not found.
    */
+
   async findById(id: string): Promise<User | null> {
     const userRecord = await prisma.usuario.findUnique({
       where: { id },

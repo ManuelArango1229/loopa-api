@@ -32,6 +32,7 @@ model RefreshToken {
   expiresAt  DateTime
 }
 
+
 model PasswordReset {
   id        String   @id @default(cuid())
   email     String
@@ -39,3 +40,4 @@ model PasswordReset {
   expiresAt DateTime
   createdAt DateTime @default(now())
 }
+
