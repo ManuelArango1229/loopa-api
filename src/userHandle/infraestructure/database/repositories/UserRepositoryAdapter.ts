@@ -100,4 +100,22 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
       data: { contrasena: password },
     });
   }
+
+  /**
+   * Updates the user information.
+   * @param userEmail The email of the user to be updated.
+   * @param data The new data for the user.
+   */
+    async updateUser(userEmail: string, data: Partial<User>) {
+      await prisma.usuario.update({
+        where: {
+          email: userEmail
+        },
+        data: {
+          nombre: data.name,
+          email: data.email,
+          contrasena: data.password
+        }
+      });
+  }
 }

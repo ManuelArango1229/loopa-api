@@ -6,6 +6,7 @@ interface UserRepositoryPort {
   findById(id: string): Promise<User | null>;
   findByResetToken(token: string): Promise<User | null>;
   updatePassword(email: string, password: string): Promise<void>;
+  updateUser(userId: string, data: Partial<User>): Promise<void>;
 }
 
 export default UserRepositoryPort;

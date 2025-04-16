@@ -12,6 +12,7 @@ import type LogoutUserInteractor from "../../application/use_cases/LogoutUserInt
 import type RefreshTokensInteractor from "../../application/use_cases/RefreshTokensInteractor";
 import type { LoginResponse } from "./types/LoginResponse";
 import type { RefreshTokenResponse } from "./types/RefreshTokenResponse";
+import type UpdateUserInteractor from "../../application/use_cases/UpdateUserInteractor";
 
 export class UserController {
   constructor(
@@ -21,6 +22,7 @@ export class UserController {
     private resetpasswordInteractor: ResetPasswordInteractor,
     private logoutInteractor: LogoutUserInteractor,
     private refreshTokensInteractor: RefreshTokensInteractor,
+    private updateuserInteractor: UpdateUserInteractor,
   ) {}
 
   /**
@@ -156,6 +158,31 @@ export class UserController {
         .json({ message: "Contraseña restablecida correctamente" });
     } catch (error: any) {
       console.error("Error al restablecer la contraseña:", error);
+      return res.status(400).json({ message: error.message });
+    }
+  }
+
+  /**
+   * Updates the user information.
+   * @param req Express request object containing the user ID and updated data.
+   * @param res Express response object.
+   * @returns A response with a 200 status code if the user was updated successfully, otherwise a 400 status code and an error message.
+   */
+  async updateUser(req: Request, res: Response): Promise<Response> {
+    const currentEmail = req.params.email;
+    const { name, email, password } = req.body;
+  
+    try {
+      await this.updateuserInteractor.execute({
+        currentEmail,
+        name,
+        email,
+        password
+      });
+  
+      return res.status(200).json({ message: "Usuario actualizado correctamente" });
+    } catch (error: any) {
+      console.error("Error al actualizar el usuario:", error);
       return res.status(400).json({ message: error.message });
     }
   }

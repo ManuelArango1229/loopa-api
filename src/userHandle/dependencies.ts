@@ -10,6 +10,7 @@ import ResetPasswordInteractor from "./application/use_cases/ResetPasswordIntera
 import PasswordResetTokenAdapter from "./infraestructure/services/PasswordResetTokenAdapter";
 import ResetPasswordEmailInteractor from "./application/use_cases/ResetPasswordEmailInteractor";
 import RefreshTokensInteractor from "./application/use_cases/RefreshTokensInteractor";
+import UpdateUserInteractor from "./application/use_cases/UpdateUserInteractor";
 
 const refreshTokenRepository = new RefreshTokenRepositoryAdapter();
 const tokenGeneratorServices = new TokenGeneratorServiceAdapter();
@@ -38,6 +39,7 @@ const refreshTokensInteractor = new RefreshTokensInteractor(
   refreshTokenRepository,
   tokenGeneratorServices,
 );
+const updateUserInteractor = new UpdateUserInteractor(userRepository, encrypter);
 const userController = new UserController(
   registerUseCase,
   loginUserInteractor,
@@ -45,6 +47,7 @@ const userController = new UserController(
   resetpasswordInteractor,
   logoutInteractor,
   refreshTokensInteractor,
+  updateUserInteractor,
 );
 
 export { userController };
