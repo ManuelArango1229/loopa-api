@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development ts-node src/server.ts",
+    "dev": "NODE_ENV=development ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "biome lint",
@@ -28,11 +28,11 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.14",
     "@types/nodemailer": "^6.4.17",
-    "cross-env": "^7.0.3",
     "prisma": "^6.6.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
@@ -40,6 +40,7 @@
   "dependencies": {
     "@prisma/client": "^6.6.0",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "dotenv-flow": "^4.1.0",
     "express": "^5.1.0",
     "habit-tracker-api": "file:",
