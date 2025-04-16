@@ -1,6 +1,5 @@
 import type RefreshTokenRepositoryPort from "../repositories/RefreshTokenRepositoryPort";
 import type TokenGeneratorServicePort from "../services/TokenGeneratorServicePort";
-import { RefreshTokenWithUser } from "../types/RefreshTokenResponse";
 import type TokenResponse from "../types/TokenResponse";
 
 class RefreshTokensInteractor {
