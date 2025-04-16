@@ -40,4 +40,28 @@ router.post("/refresh-token", async (req, res, next) => {
   }
 });
 
+router.post("/forgot-password", async (req, res, next) => {
+  try {
+    await userController.forgotPassword(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/reset-password", async (req, res, next) => {
+  try {
+    await userController.resetPassword(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:email", async (req, res, next) => {
+  try {
+    await userController.updateUser(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
