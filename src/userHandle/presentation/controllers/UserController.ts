@@ -8,8 +8,8 @@ import type LoginUserInteractor from "../../application/use_cases/LoginUserInter
 import type TokenResponse from "../../application/types/TokenResponse";
 import type LogoutUserInteractor from "../../application/use_cases/LogoutUserInteractor";
 import type RefreshTokensInteractor from "../../application/use_cases/RefreshTokensInteractor";
-import { LoginResponse } from "./types/LoginResponse";
-import { RefreshTokenResponse } from "./types/RefreshTokenResponse";
+import type { LoginResponse } from "./types/LoginResponse";
+import type { RefreshTokenResponse } from "./types/RefreshTokenResponse";
 
 export class UserController {
   constructor(
@@ -33,7 +33,7 @@ export class UserController {
         await this.registerUseCase.execute(user);
       return createdUser;
     } catch (error: any) {
-      throw error;
+      throw new Error("Error in register");
     }
   }
 
@@ -60,7 +60,7 @@ export class UserController {
         user: { id, name, email: userEmail },
       };
     } catch (error: any) {
-      throw error;
+      throw new Error("Error in login");
     }
   }
 
@@ -79,7 +79,7 @@ export class UserController {
       });
       return { message: "Logout exitoso" };
     } catch (error: any) {
-      throw error;
+      throw new Error("Error in logout");
     }
   }
   async refreshToken(
@@ -104,7 +104,7 @@ export class UserController {
         accessToken: responseInteractor.accessToken,
       };
     } catch (error: any) {
-      throw error;
+      throw new Error("Error in refresh token");
     }
   }
 }
