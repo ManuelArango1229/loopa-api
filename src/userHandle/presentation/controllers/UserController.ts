@@ -61,13 +61,24 @@ export class UserController {
         throw responseInteractor;
       }
       const response: TokenResponse = responseInteractor;
+      const userAgent = req.headers["user-agent"] ?? "";
+      const isMobile =
+        userAgent.includes("okhttp") || req.headers["x-mobile-app"] === "true";
+
+      const { id, name, email: userEmail } = response.user;
+      if (isMobile) {
+        return {
+          refreshToken: response.refreshToken,
+          accessToken: response.accessToken,
+          user: { id, name, email: userEmail },
+        };
+      }
       res.cookie("refreshToken", response.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         maxAge: 365 * 24 * 60 * 60 * 1000,
       });
-      const { id, name, email: userEmail } = response.user;
       return {
         accessToken: response.accessToken,
         user: { id, name, email: userEmail },
@@ -84,6 +95,13 @@ export class UserController {
         await this.logoutInteractor.execute(refreshToken);
       if (responseInteractor instanceof Error) {
         throw responseInteractor;
+      }
+
+      const userAgent = req.headers["user-agent"] ?? "";
+      const isMobile =
+        userAgent.includes("okhttp") || req.headers["x-mobile-app"] === "true";
+      if (isMobile) {
+        return { message: "Logout exitoso" };
       }
       res.clearCookie("refreshToken", {
         httpOnly: true,
@@ -132,7 +150,6 @@ export class UserController {
     const { email } = req.body;
 
     try {
-      // Llamar al interactor para enviar el correo de restablecimiento
       await this.resetpasswordEmailInteractor.execute(email);
       res.status(200).json({ message: "Correo de restablecimiento enviado" });
     } catch (error: any) {
@@ -151,7 +168,6 @@ export class UserController {
     const { token, newPassword } = req.body;
 
     try {
-      // Llamar al interactor para restablecer la contraseña
       await this.resetpasswordInteractor.execute(token, newPassword);
       return res
         .status(200)
@@ -171,16 +187,18 @@ export class UserController {
   async updateUser(req: Request, res: Response): Promise<Response> {
     const currentEmail = req.params.email;
     const { name, email, password } = req.body;
-  
+
     try {
       await this.updateuserInteractor.execute({
         currentEmail,
         name,
         email,
-        password
+        password,
       });
-  
-      return res.status(200).json({ message: "Usuario actualizado correctamente" });
+
+      return res
+        .status(200)
+        .json({ message: "Usuario actualizado correctamente" });
     } catch (error: any) {
       console.error("Error al actualizar el usuario:", error);
       return res.status(400).json({ message: error.message });
