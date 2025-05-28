@@ -13,25 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Usuario {
-  id              String        @id @default(uuid())
-  nombre          String
-  email           String        @unique
-  contrasena      String
-  refreshTokens   RefreshToken?  
-  fecha_creacion  DateTime      @default(now())
+  id             String        @id @default(uuid())
+  nombre         String
+  email          String        @unique
+  contrasena     String
+  refreshTokens  RefreshToken?
+  fecha_creacion DateTime      @default(now())
+  Habit          Habit[]
 }
 
 model RefreshToken {
-  id         String     @id @default(uuid())
-  token      String     @unique
-  usuarioId  String     @unique
-  usuario    Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
-  createdAt  DateTime   @default(now())
-  expiresAt  DateTime
+  id        String   @id @default(uuid())
+  token     String   @unique
+  usuarioId String   @unique
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }
-
 
 model PasswordReset {
   id        String   @id @default(cuid())
@@ -41,3 +40,12 @@ model PasswordReset {
   createdAt DateTime @default(now())
 }
 
+model Habit {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  frequency   Json
+  userId      String
+  usuario     Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
