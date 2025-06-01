@@ -4,6 +4,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
 import habitRoutes from "./habitHanle/presentation/routes/HabitRoutes";
+import errorHandler from "./userHandle/middlewares/ErrorHandler";
 
 dotenvFlow.config();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

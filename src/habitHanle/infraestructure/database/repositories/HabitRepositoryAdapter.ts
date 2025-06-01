@@ -1,6 +1,6 @@
 import Habit from "../../../domain/entities/Habit";
-import HabitRepositoryPort from "../../../domain/repositories/HabitRepositoryport";
-import Frequency from "../../../domain/value_objects/Frequency";
+import type HabitRepositoryPort from "../../../domain/repositories/HabitRepositoryport";
+import type Frequency from "../../../domain/value_objects/Frequency";
 import { prisma } from "../prisma/Prisma";
 
 class HabitRepositoryAdapter implements HabitRepositoryPort {

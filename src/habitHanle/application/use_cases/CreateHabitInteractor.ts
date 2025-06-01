@@ -1,7 +1,7 @@
-import HabitRepositoryPort from "../../domain/repositories/HabitRepositoryport";
+import type HabitRepositoryPort from "../../domain/repositories/HabitRepositoryport";
 import Habit from "../../domain/entities/Habit";
-import CreateHabitResponse from "../types/CreateHabitResponse";
-import CreateHabitRequest from "../types/CreateHabitRequest";
+import type CreateHabitResponse from "../types/CreateHabitResponse";
+import type CreateHabitRequest from "../types/CreateHabitRequest";
 
 class CreateHabitInteractor {
   private habitRepository: HabitRepositoryPort;
