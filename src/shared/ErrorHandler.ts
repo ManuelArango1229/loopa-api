@@ -4,7 +4,8 @@ import type {
   NextFunction,
   ErrorRequestHandler,
 } from "express";
-import InvalidRequestError from "../domain/errors/InvalidRequestError";
+import InvalidRequestError from "../userHandle/domain/errors/InvalidRequestError";
+import InvalidRequestErrorHabit from "../habitHanle/domain/errors/InvalidRequestError";
 
 const errorHandler: ErrorRequestHandler = (
   err: any,
@@ -12,7 +13,10 @@ const errorHandler: ErrorRequestHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  if (err instanceof InvalidRequestError) {
+  if (
+    err instanceof InvalidRequestError ||
+    err instanceof InvalidRequestErrorHabit
+  ) {
     res.status(400).json({
       error: {
         message: err.message,

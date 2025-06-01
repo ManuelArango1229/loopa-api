@@ -1,13 +1,20 @@
-import CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
+import type CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
 import type CreateHabitRequest from "../../application/types/CreateHabitRequest";
 import type CreateHabitResponse from "../../application/types/CreateHabitResponse";
 import type { Request } from "express";
+import CreateHabitSchema from "../validation/CreateHabitSchema";
+import InvalidRequestError from "../../domain/errors/InvalidRequestError";
 class HabitController {
   constructor(private createHabitInteractor: CreateHabitInteractor) {}
   async createHabit(req: Request): Promise<CreateHabitResponse> {
-    const habit: CreateHabitRequest = req.body;
+    const parsed = CreateHabitSchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new InvalidRequestError(parsed.error.format());
+    }
     const response: CreateHabitResponse =
-      await this.createHabitInteractor.execute(habit);
+      await this.createHabitInteractor.execute(
+        parsed.data as CreateHabitRequest,
+      );
     return response;
   }
 }
