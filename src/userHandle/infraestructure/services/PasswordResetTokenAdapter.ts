@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { PrismaClient } from "@prisma/client";
-import PasswordResetTokenPort from "../../application/services/PasswordResetTokenPort";
+import type PasswordResetTokenPort from "../../application/services/PasswordResetTokenPort";
 
 /**
  * PasswordResetTokenAdapter is a class that implements the PasswordResetTokenPort interface.
@@ -52,13 +52,13 @@ class PasswordResetTokenAdapter implements PasswordResetTokenPort {
     });
 
     const transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: Number(process.env.MAIL_PORT),
-        auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
-        }
-      });
+      host: process.env.MAIL_HOST,
+      port: Number(process.env.MAIL_PORT),
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
 
     /**
      * The reset link that the user will click to reset their password.
