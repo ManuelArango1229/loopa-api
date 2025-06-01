@@ -1,10 +1,10 @@
-import dotenvFlow from "dotenv-flow";
-dotenvFlow.config();
-import express from "express";
 import cookieParser from "cookie-parser";
-import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
-import habitRoutes from "./habitHanle/presentation/routes/HabitRoutes";
+import dotenvFlow from "dotenv-flow";
+import express from "express";
+import habitRoutes from "./habitHandle/presentation/routes/HabitRoutes";
 import errorHandler from "./shared/ErrorHandler";
+import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
+dotenvFlow.config();
 
 dotenvFlow.config();
 const PORT = process.env.PORT || 3000;
@@ -17,12 +17,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/habits", habitRoutes);
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "API Habit Tracker",
-  });
+	res.json({
+		message: "API Habit Tracker",
+	});
 });
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+	console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
