@@ -1,8 +1,9 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import type CustomRequest from "./types/CustomRequest";
 
 export function authMiddleware(
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction,
 ) {
@@ -20,7 +21,7 @@ export function authMiddleware(
     const payload = jwt.verify(token, process.env.SECRET_ACCESS_TOKEN_KEY) as {
       id: string;
     };
-    (req as any).userId = payload.id;
+    req.userId = payload.id;
     next();
   } catch (err) {
     res.status(403).json({ message: "Token inválido o expirado" });

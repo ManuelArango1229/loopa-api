@@ -44,10 +44,16 @@ export class RefreshTokenRepositoryAdapter
         where: { token },
       });
       return true;
-    } catch (error: any) {
-      if (error.code === "P2025") {
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        (error as { code?: string }).code === "P2025"
+      ) {
         return false;
       }
+
       throw error;
     }
   }
@@ -78,8 +84,13 @@ export class RefreshTokenRepositoryAdapter
         where: { usuarioId: id },
       });
       return true;
-    } catch (error: any) {
-      if (error.code === "P2025") {
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        (error as { code?: string }).code === "P2025"
+      ) {
         return false;
       }
       throw error;
