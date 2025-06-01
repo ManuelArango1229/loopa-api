@@ -13,13 +13,14 @@ class Habit {
     frequency: Frequency,
     userId: string,
     id?: string,
+    createAt?: Date,
   ) {
     this._id = id;
     this._name = name;
     this._description = description;
     this._frequency = frequency;
     this._userId = userId;
-    this._createdAt = new Date();
+    this._createdAt = createAt ?? new Date();
   }
 
   get id(): string | undefined {
@@ -54,8 +55,8 @@ class Habit {
     this._description = description;
   }
 
-  set frequency(frecuency: Frequency) {
-    this._frequency = frecuency;
+  set frequency(frequency: Frequency) {
+    this._frequency = frequency;
   }
 
   set userId(userId: string) {
@@ -67,7 +68,7 @@ class Habit {
   }
 
   toString(): string {
-    return `Habit: ${this._name}, Description: ${this._description}, Frecuency: ${JSON.stringify(this._frequency)}, User ID: ${this._userId}, Created At: ${this._createdAt.toISOString()}`;
+    return `Habit: ${this._name}, Description: ${this._description}, Frequency: ${JSON.stringify(this._frequency)}, User ID: ${this._userId}, Created At: ${this._createdAt.toISOString()}`;
   }
 }
 

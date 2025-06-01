@@ -1,7 +1,8 @@
-import expres, { Request } from "express";
+import express from "express";
+import type { Request } from "express";
 import { habitController } from "../../Dependencies";
 
-const router = expres.Router();
+const router = express.Router();
 
 router.post("/create-habit", async (req: Request, res, next) => {
   try {
