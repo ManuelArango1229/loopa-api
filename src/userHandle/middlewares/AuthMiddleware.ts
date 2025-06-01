@@ -1,9 +1,8 @@
-import type { Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import type CustomRequest from "./types/CustomRequest";
 
 export function authMiddleware(
-  req: CustomRequest,
+  req: Request,
   res: Response,
   next: NextFunction,
 ) {
