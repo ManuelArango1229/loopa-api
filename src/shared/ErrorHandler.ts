@@ -1,11 +1,11 @@
 import type {
+	ErrorRequestHandler,
+	NextFunction,
 	Request,
 	Response,
-	NextFunction,
-	ErrorRequestHandler,
 } from "express";
+import InvalidRequestErrorHabit from "../habitHandle/domain/errors/InvalidRequestError";
 import InvalidRequestError from "../userHandle/domain/errors/InvalidRequestError";
-import InvalidRequestErrorHabit from "../habitHanle/domain/errors/InvalidRequestError";
 
 const errorHandler: ErrorRequestHandler = (
 	err: unknown,

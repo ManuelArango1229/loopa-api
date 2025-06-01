@@ -1,6 +1,6 @@
-import nodemailer from "nodemailer";
 import crypto from "node:crypto";
 import { PrismaClient } from "@prisma/client";
+import nodemailer from "nodemailer";
 import type PasswordResetTokenPort from "../../application/services/PasswordResetTokenPort";
 
 /**

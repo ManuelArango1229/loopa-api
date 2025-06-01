@@ -1,9 +1,9 @@
-import type CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
+import type { Request } from "express";
 import type CreateHabitRequest from "../../application/types/CreateHabitRequest";
 import type CreateHabitResponse from "../../application/types/CreateHabitResponse";
-import type { Request } from "express";
-import CreateHabitSchema from "../validation/CreateHabitSchema";
+import type CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
 import InvalidRequestError from "../../domain/errors/InvalidRequestError";
+import CreateHabitSchema from "../validation/CreateHabitSchema";
 class HabitController {
 	constructor(private createHabitInteractor: CreateHabitInteractor) {}
 	async createHabit(req: Request): Promise<CreateHabitResponse> {
