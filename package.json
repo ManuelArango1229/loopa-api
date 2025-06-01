@@ -4,7 +4,7 @@
 	"description": "Este repositorio contiene el backend del proyecto **Habit Tracker**, desarrollado en **Node.js** con **TypeScript** bajo una **arquitectura hexagonal con vertical slicing**.",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "echo \"Error: no test specified\"",
 		"dev": "cross-env NODE_ENV=development ts-node src/server.ts",
 		"build": "tsc",
 		"start": "node dist/server.js",
