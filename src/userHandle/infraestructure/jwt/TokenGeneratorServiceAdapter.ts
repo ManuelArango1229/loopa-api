@@ -1,7 +1,7 @@
 import "dotenv-flow/config";
+import jwt from "jsonwebtoken";
 import type TokenGeneratorServicePort from "../../application/services/TokenGeneratorServicePort";
 import type TokenPayload from "../../application/types/TokenPayload";
-import jwt from "jsonwebtoken";
 
 export class TokenGeneratorServiceAdapter implements TokenGeneratorServicePort {
 	generateAccessToken(payload: string): Promise<string> {

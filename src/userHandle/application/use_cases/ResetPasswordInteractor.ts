@@ -1,7 +1,6 @@
-// src/application/interactors/ResetPasswordInteractor.ts
-import type PasswordResetTokenPort from "../services/PasswordResetTokenPort";
 import type UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
 import type PasswordHasherServicePort from "../services/PasswordHashedServicePort";
+import type PasswordResetTokenPort from "../services/PasswordResetTokenPort";
 
 export class ResetPasswordInteractor {
 	constructor(
