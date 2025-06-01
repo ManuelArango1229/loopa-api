@@ -8,7 +8,7 @@ import InvalidRequestError from "../userHandle/domain/errors/InvalidRequestError
 import InvalidRequestErrorHabit from "../habitHanle/domain/errors/InvalidRequestError";
 
 const errorHandler: ErrorRequestHandler = (
-  err: any,
+  err: unknown,
   req: Request,
   res: Response,
   next: NextFunction,

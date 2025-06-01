@@ -1,4 +1,4 @@
-import Frequency from "../../domain/value_objects/Frequency";
+import type Frequency from "../../domain/value_objects/Frequency";
 
 type CreateHabitRequest = {
   name: string;

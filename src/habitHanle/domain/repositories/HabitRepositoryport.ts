@@ -1,4 +1,4 @@
-import Habit from "../entities/Habit";
+import type Habit from "../entities/Habit";
 interface HabitRepositoryPort {
   getHabitById(id: string): Promise<Habit | null>;
   createHabit(habit: Habit): Promise<Habit>;

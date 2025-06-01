@@ -1,6 +1,6 @@
 class InvalidRequestError extends Error {
-  public readonly details: any;
-  constructor(details: any) {
+  public readonly details: unknown[];
+  constructor(details: unknown[]) {
     super("Invalid request data");
     this.name = "InvalidRequestError";
     this.details = details;

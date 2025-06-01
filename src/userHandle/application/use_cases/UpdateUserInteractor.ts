@@ -1,4 +1,4 @@
-import UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
+import type UserRepositoryPort from "../../domain/repositories/UserRepositoryPort";
 import type PasswordHasherServicePort from "../services/PasswordHashedServicePort";
 
 interface UpdateUserDTO {
@@ -17,7 +17,7 @@ interface UpdateUserData {
 export class UpdateUserInteractor {
   constructor(
     private readonly userRepository: UserRepositoryPort,
-    private encrypter: PasswordHasherServicePort
+    private encrypter: PasswordHasherServicePort,
   ) {}
 
   async execute(data: UpdateUserDTO) {
