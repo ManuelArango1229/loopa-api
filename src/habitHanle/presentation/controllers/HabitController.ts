@@ -1,7 +1,7 @@
 import CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
-import CreateHabitRequest from "../../application/types/CreateHabitRequest";
-import CreateHabitResponse from "../../application/types/CreateHabitResponse";
-import { Request } from "express";
+import type CreateHabitRequest from "../../application/types/CreateHabitRequest";
+import type CreateHabitResponse from "../../application/types/CreateHabitResponse";
+import type { Request } from "express";
 class HabitController {
   constructor(private createHabitInteractor: CreateHabitInteractor) {}
   async createHabit(req: Request): Promise<CreateHabitResponse> {

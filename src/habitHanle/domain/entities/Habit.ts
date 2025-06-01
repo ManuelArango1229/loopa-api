@@ -1,4 +1,4 @@
-import Frequency from "../value_objects/Frequency";
+import type Frequency from "../value_objects/Frequency";
 class Habit {
   private _id?: string;
   private _name: string;
