@@ -1,18 +1,21 @@
 import type { Request, Response } from "express";
-import type { RegisterUseCase } from "../../application/use_cases/RegisterUseCase";
 import type {
   RegisterRequest,
   RegisterResponse,
 } from "../../application/types";
-import type LoginUserInteractor from "../../application/use_cases/LoginUserInteractor";
-import type ResetPasswordEmailInteractor from "../../application/use_cases/ResetPasswordEmailInteractor";
-import type ResetPasswordInteractor from "../../application/use_cases/ResetPasswordInteractor";
 import type TokenResponse from "../../application/types/TokenResponse";
+import type LoginUserInteractor from "../../application/use_cases/LoginUserInteractor";
 import type LogoutUserInteractor from "../../application/use_cases/LogoutUserInteractor";
 import type RefreshTokensInteractor from "../../application/use_cases/RefreshTokensInteractor";
+import type { RegisterUseCase } from "../../application/use_cases/RegisterUseCase";
+import type ResetPasswordEmailInteractor from "../../application/use_cases/ResetPasswordEmailInteractor";
+import type ResetPasswordInteractor from "../../application/use_cases/ResetPasswordInteractor";
+import type UpdateUserInteractor from "../../application/use_cases/UpdateUserInteractor";
+import InvalidRequestError from "../../domain/errors/InvalidRequestError";
+import LoginSchema from "../validation/LoginSchema";
+import RegisterSchema from "../validation/RegisterSchema";
 import type { LoginResponse } from "./types/LoginResponse";
 import type { RefreshTokenResponse } from "./types/RefreshTokenResponse";
-import type UpdateUserInteractor from "../../application/use_cases/UpdateUserInteractor";
 
 export class UserController {
   constructor(
@@ -33,13 +36,18 @@ export class UserController {
    */
 
   async register(req: Request, res: Response): Promise<RegisterResponse> {
-    const user: RegisterRequest = req.body;
+    const parsedBody = RegisterSchema.safeParse(req.body);
+
+    if (!parsedBody.success) {
+      throw new InvalidRequestError(parsedBody.error.format());
+    }
 
     try {
-      const createdUser: RegisterResponse =
-        await this.registerUseCase.execute(user);
+      const createdUser: RegisterResponse = await this.registerUseCase.execute(
+        parsedBody.data as RegisterRequest,
+      );
       return createdUser;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new Error("Error in register");
     }
   }
@@ -51,11 +59,14 @@ export class UserController {
    * @returns A response with a 200 status code and the generated token if successful, otherwise a 400 status code and an error message.
    */
   async login(req: Request, res: Response): Promise<LoginResponse> {
-    const { email, password } = req.body;
+    const parsedBody = LoginSchema.safeParse(req.body);
+    if (!parsedBody.success) {
+      throw new InvalidRequestError(parsedBody.error.format());
+    }
     try {
       const responseInteractor = await this.loginInteractor.execute(
-        email,
-        password,
+        parsedBody.data.email,
+        parsedBody.data.password,
       );
       if (responseInteractor instanceof Error) {
         throw responseInteractor;
@@ -83,7 +94,7 @@ export class UserController {
         accessToken: response.accessToken,
         user: { id, name, email: userEmail },
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new Error("Error in login");
     }
   }
@@ -109,7 +120,7 @@ export class UserController {
         sameSite: "strict",
       });
       return { message: "Logout exitoso" };
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new Error("Error in logout");
     }
   }
@@ -135,7 +146,7 @@ export class UserController {
         message: "Refresh token exitoso",
         accessToken: responseInteractor.accessToken,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw new Error("Error in refresh token");
     }
   }
@@ -152,9 +163,8 @@ export class UserController {
     try {
       await this.resetpasswordEmailInteractor.execute(email);
       res.status(200).json({ message: "Correo de restablecimiento enviado" });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error al enviar el correo de restablecimiento:", error);
-      res.status(400).json({ message: error.message });
     }
   }
 
@@ -172,9 +182,8 @@ export class UserController {
       return res
         .status(200)
         .json({ message: "Contraseña restablecida correctamente" });
-    } catch (error: any) {
-      console.error("Error al restablecer la contraseña:", error);
-      return res.status(400).json({ message: error.message });
+    } catch (error: unknown) {
+      throw new Error("Error al restablecer la contraseña");
     }
   }
 
@@ -199,9 +208,8 @@ export class UserController {
       return res
         .status(200)
         .json({ message: "Usuario actualizado correctamente" });
-    } catch (error: any) {
-      console.error("Error al actualizar el usuario:", error);
-      return res.status(400).json({ message: error.message });
+    } catch (error: unknown) {
+      throw new Error("Error al actualizar el usuario");
     }
   }
 }
