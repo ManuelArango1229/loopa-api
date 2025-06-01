@@ -19,35 +19,38 @@ const encrypter = new BcryptService();
 const userRepository = new UserRepositoryAdapter();
 const registerUseCase = new RegisterUseCase(userRepository, encrypter);
 const loginUserInteractor = new LoginUserInteractor(
-  userRepository,
-  tokenGeneratorServices,
-  encrypter,
-  refreshTokenRepository,
+	userRepository,
+	tokenGeneratorServices,
+	encrypter,
+	refreshTokenRepository,
 );
 const resetpasswordEmailInteractor = new ResetPasswordEmailInteractor(
-  userRepository,
-  passwordResetService,
+	userRepository,
+	passwordResetService,
 );
 const resetpasswordInteractor = new ResetPasswordInteractor(
-  passwordResetService,
-  userRepository,
-  encrypter,
+	passwordResetService,
+	userRepository,
+	encrypter,
 );
 const logoutInteractor = new LogoutUserInteractor(refreshTokenRepository);
 
 const refreshTokensInteractor = new RefreshTokensInteractor(
-  refreshTokenRepository,
-  tokenGeneratorServices,
+	refreshTokenRepository,
+	tokenGeneratorServices,
 );
-const updateUserInteractor = new UpdateUserInteractor(userRepository, encrypter);
+const updateUserInteractor = new UpdateUserInteractor(
+	userRepository,
+	encrypter,
+);
 const userController = new UserController(
-  registerUseCase,
-  loginUserInteractor,
-  resetpasswordEmailInteractor,
-  resetpasswordInteractor,
-  logoutInteractor,
-  refreshTokensInteractor,
-  updateUserInteractor,
+	registerUseCase,
+	loginUserInteractor,
+	resetpasswordEmailInteractor,
+	resetpasswordInteractor,
+	logoutInteractor,
+	refreshTokensInteractor,
+	updateUserInteractor,
 );
 
 export { userController };
