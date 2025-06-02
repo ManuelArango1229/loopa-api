@@ -17,12 +17,12 @@ app.use("/api/users", userRoutes);
 app.use("/api/habits", habitRoutes);
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "API Habit Tracker",
-  });
+	res.json({
+		message: "API Habit Tracker",
+	});
 });
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+	console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
