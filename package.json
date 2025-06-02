@@ -1,5 +1,5 @@
 {
-	"name": "habit-tracker-api",
+	"name": "loopa-api",
 	"version": "1.0.0",
 	"description": "Este repositorio contiene el backend del proyecto **Habit Tracker**, desarrollado en **Node.js** con **TypeScript** bajo una **arquitectura hexagonal con vertical slicing**.",
 	"main": "index.js",
@@ -16,13 +16,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ManuelArango1229/habit-tracker-api.git"
+		"url": "git+https://github.com/ManuelArango1229/loopa-api.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/ManuelArango1229/habit-tracker-api/issues"
+		"url": "https://github.com/ManuelArango1229/loopa-api/issues"
 	},
 	"homepage": "https://github.com/ManuelArango1229/habit-tracker-api#readme",
 	"devDependencies": {
