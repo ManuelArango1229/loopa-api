@@ -39,4 +39,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/loopa-api:${{env.VERSION}}
-            ${{ secrets.DOCKER_USERNAME}}/loopa-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/loopa-api:latest
