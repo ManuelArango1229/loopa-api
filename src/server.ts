@@ -4,6 +4,7 @@ import express from "express";
 import habitRoutes from "./habitHandle/presentation/routes/HabitRoutes";
 import errorHandler from "./shared/ErrorHandler";
 import userRoutes from "./userHandle/presentation/routes/AuthRoutes";
+import { authMiddleware } from "./userHandle/middlewares/AuthMiddleware";
 dotenvFlow.config();
 
 dotenvFlow.config();
@@ -14,15 +15,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
-app.use("/api/habits", habitRoutes);
+app.use("/api/habits", authMiddleware, habitRoutes);
 
 app.get("/", (req, res) => {
-	res.json({
-		message: "API Habit Tracker",
-	});
+  res.json({
+    message: "API Habit Tracker",
+  });
 });
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-	console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
