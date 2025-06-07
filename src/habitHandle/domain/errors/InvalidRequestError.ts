@@ -1,10 +1,9 @@
-class InvalidRequestError extends Error {
-	public readonly details: unknown;
-	constructor(details: unknown) {
-		super("Invalid request data");
-		this.name = "InvalidRequestError";
-		this.details = details;
-	}
+import AppError from "../../../shared/globalError/AppError";
+
+class InvalidRequestError extends AppError {
+  constructor(message = "Invalid request", details?: unknown) {
+    super(message, 400, "INVALID_REQUEST", details);
+  }
 }
 
 export default InvalidRequestError;
