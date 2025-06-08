@@ -22,4 +22,13 @@ router.get("/", async (req: Request, res, next) => {
 	}
 });
 
+router.post("/check", async (req: Request, res, next) => {
+	try {
+		const response = await habitController.checkHabit(req);
+		res.status(200).json(response);
+	} catch (error) {
+		next(error);
+	}
+});
+
 export default router;

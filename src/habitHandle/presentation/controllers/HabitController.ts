@@ -2,6 +2,7 @@ import type { Request } from "express";
 import type CreateHabitRequest from "../../application/types/CreateHabitRequest";
 import type CreateHabitResponse from "../../application/types/CreateHabitResponse";
 import type GetAllHabitsByDateResponse from "../../application/types/GetAllHabitsByDateResponse";
+import type CheckHabitInteractor from "../../application/use_cases/CheckHabitInteractor";
 import type CreateHabitInteractor from "../../application/use_cases/CreateHabitInteractor";
 import type GetAllHabitsByDateInteractor from "../../application/use_cases/GetAllHabitsByDateInteractor";
 import type Habit from "../../domain/entities/Habit";
@@ -11,6 +12,7 @@ class HabitController {
 	constructor(
 		private createHabitInteractor: CreateHabitInteractor,
 		private getAllHabitsByDateInteractor: GetAllHabitsByDateInteractor,
+		private checkHabitInteractor: CheckHabitInteractor,
 	) {}
 	async createHabit(req: Request): Promise<CreateHabitResponse> {
 		const parsed = CreateHabitSchema.safeParse(req.body);
@@ -53,6 +55,20 @@ class HabitController {
 			userId: userId,
 		};
 		return formattedHabits;
+	}
+
+	async checkHabit(
+		req: Request,
+	): Promise<{ result: boolean; message: string }> {
+		const { habitId, date } = req.body;
+		if (typeof habitId !== "string" || typeof date !== "string") {
+			throw new InvalidRequestError("Habit ID and date must be strings");
+		}
+		const response = await this.checkHabitInteractor.execute({
+			habitId,
+			date: new Date(date),
+		});
+		return response;
 	}
 }
 
