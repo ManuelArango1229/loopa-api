@@ -1,16 +1,16 @@
 class HabitCheckmark {
-  private id: number;
+  private id?: number;
   private habitId: number;
   private date: Date;
   private completed: boolean;
   private createdAt: Date;
 
   constructor(
-    id: number,
     habitId: number,
     date: Date,
     completed: boolean,
     createdAt: Date,
+    id?: number,
   ) {
     this.id = id;
     this.habitId = habitId;
@@ -19,7 +19,7 @@ class HabitCheckmark {
     this.createdAt = createdAt;
   }
 
-  getId(): number {
+  getId(): number | undefined {
     return this.id;
   }
   getHabitId(): number {
