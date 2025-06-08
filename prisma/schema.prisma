@@ -41,11 +41,20 @@ model PasswordReset {
 }
 
 model Habit {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  frequency   Json
-  userId      String
-  usuario     Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
+  id              String           @id @default(uuid())
+  name            String
+  description     String
+  frequency       Json
+  userId          String
+  usuario         Usuario          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitCheckmarks HabitCheckmark[]
+  createdAt       DateTime         @default(now())
+}
+
+model HabitCheckmark {
+  id        String   @id @default(uuid())
+  habitId   String
+  date      DateTime
+  completed Boolean
+  habit     Habit    @relation(fields: [habitId], references: [id])
 }
